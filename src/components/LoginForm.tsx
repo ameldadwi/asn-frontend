@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { useNavigate } from "react-router-dom"; // kalau pakai router
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://asn-backend.azurewebsites.net'
+
+//const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://asn-backend.azurewebsites.net'
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -13,17 +15,23 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError("")
 
     try {
-      const res = await fetch(`${backendUrl}/api/login`, {
+      const res = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-      });
+      })
 
       const data = await res.json();
-      localStorage.setItem("token", data.token); // simpan token (optional)
-      navigate("/dashboard"); // redirect ke halaman dashboard
+      
+      if (data?.token) {
+        localStorage.setItem("token", data.token)
+        navigate("/dashboard")
+      } else {
+        setError("Login gagal: token tidak ditemukan")
+      }
       
     } catch (err: any) {
        setError(err.message || "Terjadi kesalahan");
