@@ -1,28 +1,35 @@
 import React, { useState } from 'react'
 import { Button } from './ui/button'
+import { useNavigate } from "react-router-dom"; // kalau pakai router
+
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://asn-backend.azurewebsites.net'
 
-export default function LoginForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     try {
       const res = await fetch(`${backendUrl}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-      })
-      const data = await res.json()
-      setMessage(data.message || 'Login berhasil')
-    } catch (error) {
-      setMessage('Gagal login, coba lagi')
+      });
+
+      const data = await res.json();
+      localStorage.setItem("token", data.token); // simpan token (optional)
+      navigate("/dashboard"); // redirect ke halaman dashboard
+      
+    } catch (err: any) {
+       setError(err.message || "Terjadi kesalahan");
       console.error(error)
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-xl border border-white/30">
@@ -53,7 +60,8 @@ export default function LoginForm() {
         Masuk
       </Button>
 
-      {message && <p className="text-black mt-2 text-sm">{message}</p>}
+      {error && <p className="text-black mt-2 text-sm">{error}</p>}
     </form>
   )
 }
+export default LoginForm;
