@@ -1,46 +1,50 @@
-import React, { useState } from 'react'
-import { Button } from './ui/button'
-import { useNavigate } from "react-router-dom"; // kalau pakai router
+import React, { useState } from 'react';
+import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
-
-
-//const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://asn-backend.azurewebsites.net'
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError('');
 
     try {
       const res = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-      })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data?.error || 'Gagal login');
+      }
 
       const data = await res.json();
-      
+
       if (data?.token) {
-        localStorage.setItem("token", data.token)
-        navigate("/dashboard")
+        localStorage.setItem('token', data.token);
+        navigate('/dashboard');
       } else {
-        setError("Login gagal: token tidak ditemukan")
+        throw new Error('Login gagal: token tidak ditemukan');
       }
-      
     } catch (err: any) {
-       setError(err.message || "Terjadi kesalahan");
-      console.error(error)
+      console.error('Login error:', err.message);
+      setError(err.message || 'Terjadi kesalahan');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-xl border border-white/30">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 max-w-md mx-auto bg-white/20 backdrop-blur-md p-6 rounded-xl shadow-xl border border-white/30"
+    >
       <div>
         <label className="block text-sm font-medium text-black mb-1">Username</label>
         <input
@@ -70,6 +74,7 @@ const LoginForm = () => {
 
       {error && <p className="text-black mt-2 text-sm">{error}</p>}
     </form>
-  )
-}
+  );
+};
+
 export default LoginForm;
