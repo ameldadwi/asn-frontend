@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-function App() {
+export default function Home() {
   const [loading, setLoading] = useState(false);
   const [peserta, setPeserta] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://asn-backend.azurewebsites.net";
 
-  const handleUpload = async (e) => {
+  const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!file) {
       alert("Pilih file terlebih dahulu.");
@@ -74,11 +74,16 @@ function App() {
             Upload Surat Undangan (PDF/Word):
           </label>
           <div className="flex items-center gap-4">
-            <input
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-              className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
-            />
+          <input
+            type="file"
+            onChange={(e) => {
+                const selectedFile = e.target.files?.[0];
+                if (selectedFile) {
+                setFile(selectedFile);
+                }
+            }}
+            className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+                />
             <button
               onClick={handleUpload}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
@@ -130,4 +135,4 @@ function App() {
   );
 }
 
-export default App;
+

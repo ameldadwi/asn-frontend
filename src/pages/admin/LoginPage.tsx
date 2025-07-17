@@ -1,19 +1,20 @@
+// src/pages/admin/LoginPage.tsx
 import React, { useState } from 'react';
-import { Button } from './ui/button';
+import { Button } from 'src/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
-const LoginForm = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
- 
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    navigate('/admin/dashboard');
 
     try {
       const res = await fetch(`${backendUrl}/login`, {
@@ -31,7 +32,7 @@ const LoginForm = () => {
 
       if (data?.token) {
         localStorage.setItem('token', data.token);
-        navigate('/dashboard');
+        navigate('/admin/dashboard');
       } else {
         throw new Error('Login gagal: token tidak ditemukan');
       }
@@ -78,4 +79,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;

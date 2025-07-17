@@ -1,19 +1,23 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-
+import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function ServiceDisplay() {
+
+
+  const navigate = useNavigate();
   const services = [
     {
       title: "Penyiaran",
       description: "Layanan regulasi dan perizinan penyiaran",
+      route: "/layanan/penyiaran",
       icon: (
         <div className="relative">
+          {/* Ikon penyiaran */}
           <svg className="w-16 h-16 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-            {/* Satellite Dish */}
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
             <path d="M12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 10c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
             <circle cx="12" cy="12" r="2" fill="white"/>
-            {/* Support Stand */}
             <rect x="11" y="16" width="2" height="4" fill="currentColor"/>
             <rect x="9" y="19" width="6" height="1" fill="currentColor"/>
           </svg>
@@ -29,19 +33,16 @@ export function ServiceDisplay() {
     {
       title: "Telekomunikasi",
       description: "Layanan infrastruktur dan regulasi telekomunikasi",
+      route: "/layanan/telekomunikasi",
       icon: (
         <div className="relative">
           <svg className="w-16 h-16 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-            {/* Tower Base */}
             <rect x="10" y="18" width="4" height="4" fill="currentColor"/>
-            {/* Tower Structure */}
             <path d="M12 2L9 18h6L12 2z" fill="currentColor"/>
             <path d="M12 2L10.5 18h3L12 2z" fill="white" opacity="0.3"/>
-            {/* Cross beams */}
             <rect x="8" y="8" width="8" height="0.5" fill="currentColor"/>
             <rect x="8.5" y="12" width="7" height="0.5" fill="currentColor"/>
             <rect x="9" y="16" width="6" height="0.5" fill="currentColor"/>
-            {/* Antennas */}
             <rect x="11.5" y="1" width="1" height="3" fill="currentColor"/>
             <rect x="10.5" y="2" width="3" height="0.5" fill="currentColor"/>
             <rect x="10.5" y="3" width="3" height="0.5" fill="currentColor"/>
@@ -58,16 +59,13 @@ export function ServiceDisplay() {
     {
       title: "Pos",
       description: "Layanan pos dan logistik nasional",
+      route: "/layanan/pos",
       icon: (
         <div className="relative">
           <svg className="w-16 h-16 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-            {/* Envelope Body */}
             <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
-            {/* Envelope Flap */}
             <path d="M12 13L4 6h16l-8 7z" fill="white"/>
-            {/* Envelope Details */}
             <path d="M4 8l8 6 8-6v8H4V8z" fill="rgba(255,255,255,0.2)"/>
-            {/* Stamp Area */}
             <rect x="15" y="7" width="4" height="3" fill="white" opacity="0.8"/>
             <rect x="15.5" y="7.5" width="3" height="2" fill="currentColor" opacity="0.3"/>
           </svg>
@@ -83,87 +81,81 @@ export function ServiceDisplay() {
   ];
 
   return (
-    <div className="flex flex-col justify-center h-full space-y-8 max-w-4xl">
-      <div className="space-y-6">
-        <div className="space-y-4 text-center lg:text-left">
-          <div className="relative overflow-hidden rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/50">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <img 
-                src={"src/path/gambar1.jpg"} 
-                alt="Digital Screens Background" 
-                className="w-full h-full object-cover"
-              />
-              {/* Overlay untuk membuat teks lebih terbaca */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/50"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
-            </div>
-            
-            {/* Content */}
-            <div className="relative z-10">
-              <h1 className="text-4xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-2xl">
-                Direktorat Layanan<br />
-                Ekosistem Digital
-              </h1>
-              <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto lg:mx-0 mb-6 rounded-full shadow-lg"></div>
-              <p className="text-xl lg:text-2xl text-white/90 max-w-3xl leading-relaxed drop-shadow-lg">
-                Platform terpadu untuk layanan digital yang mengintegrasikan berbagai sektor komunikasi dan informatika
-              </p>
-              <p className="text-base lg:text-lg text-white/80 max-w-2xl mt-4 leading-relaxed drop-shadow-lg">
-                Kementerian Komunikasi dan Digital Republik Indonesia
-              </p>
-            </div>
-            
-            {/* Subtle Digital Elements */}
-            <div className="absolute top-6 right-6 opacity-30 z-10">
-              <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg"></div>
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '0.5s'}}></div>
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col justify-center h-full space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-6">
+  <div className="space-y-4 text-center lg:text-left">
+    <div className="relative overflow-hidden rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/50">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={"src/path/gambar1.jpg"} 
+          alt="Digital Screens Background" 
+          className="w-full h-full object-cover"
+        />
+        {/* Overlay untuk kontras teks */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
+      </div>
 
-        <div className="flex justify-center mt-12">
-          <div className="text-center space-y-4 bg-white/60 backdrop-blur-sm rounded-xl p-6 lg:p-8 px-[21px] py-[10px]">
-            <p className="text-lg text-gray-700 font-medium">
-              Pilih layanan yang Anda butuhkan untuk mengakses sistem
-            </p>
-            <div className="flex items-center justify-center space-x-4 text-base text-gray-600">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span>Terintegrasi</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span>Aman</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span>Terpercaya</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Konten Hero */}
+      <div className="relative z-10">
+        <h1 className="text-4xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-2xl">
+          Direktorat Layanan<br />
+          Ekosistem Digital
+        </h1>
+        <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto lg:mx-0 mb-6 rounded-full shadow-lg"></div>
+        <p className="text-xl lg:text-2xl text-white/90 max-w-3xl leading-relaxed drop-shadow-lg">
+          Platform terpadu untuk layanan digital yang mengintegrasikan berbagai sektor komunikasi dan informatika
+        </p>
+        <p className="text-base lg:text-lg text-white/80 max-w-2xl mt-4 leading-relaxed drop-shadow-lg">
+          Kementerian Komunikasi dan Digital Republik Indonesia
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-[10px] mr-[0px] mb-[0px] ml-[0px]">
-          {services.map((service, index) => (
-            <Card key={index} className={`${service.color} border border-white/40 transition-all duration-300 hover:shadow-xl cursor-pointer hover:scale-105 p-2 shadow-lg`}>
-              <CardHeader className="text-center pb-3">
-                <div className="flex justify-center mb-8 h-20 items-center">
-                  {service.icon}
-                </div>
-                <CardTitle className="text-2xl font-semibold text-gray-800">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pt-0">
-                <CardDescription className="text-lg text-gray-700 leading-relaxed">
-                  {service.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Decorative Dots */}
+      <div className="absolute top-6 right-6 opacity-30 z-10">
+        <div className="flex space-x-1">
+          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg"></div>
+          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse shadow-lg" style={{ animationDelay: '0.5s' }}></div>
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-lg" style={{ animationDelay: '1s' }}></div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      {/* Daftar Layanan */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
+        {services.map((service, index) => (
+          <Card key={index} 
+            onClick={() => navigate(service.route)}
+            className={`${service.color} border border-white/40 transition-all duration-300 hover:shadow-xl cursor-pointer hover:scale-105 p-2 shadow-lg`}>
+            <CardHeader className="text-center pb-3">
+              <div className="flex justify-center mb-8 h-20 items-center">
+                {service.icon}
+              </div>
+              <CardTitle className="text-2xl font-semibold text-gray-800">
+                {service.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pt-0">
+              <CardDescription className="text-lg text-gray-700 leading-relaxed">
+                {service.description}
+              </CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Tombol Login Admin */}
+      <div className="flex justify-center pt-4">
+        <Button
+          onClick={() => navigate('/login')}
+          className="bg-blue-700 text-white hover:bg-blue-800 px-6 py-3 rounded-xl shadow-md transition-all"
+        >
+          Login Admin
+        </Button>
       </div>
     </div>
   );
